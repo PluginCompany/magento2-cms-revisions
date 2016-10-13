@@ -1,0 +1,25 @@
+{
+    "name": "plugincompany/cmsrevisions",
+    "description": "",
+    "require": {
+        "php": "~5.6.0|7.0.2|~7.0.6",
+        "magento/framework": "100.*"
+    },
+    "type": "magento2-module",
+    "version": "100.0.0",
+    "license": "MIT",
+    "homepage": "https://plugin.company/magento-extensions/cms-revisions.html",
+    "support": {
+        "issues": "https://github.com/PluginCompany/magento2-cms-revisions/issues",
+        "source": "https://github.com/PluginCompany/magento2-cms-revisions",
+        "docs": "https://plugin.company/knowledge-base/docs/magento2-cms-revisions/"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "PluginCompany\\CmsRevisions\\": ""
+        }
+    }
+}

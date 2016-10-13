@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright (c) 2014-2026 Plugin Company
+ *
+ * This file is part of CMS Revisions for Magento 2, released under the MIT License.
+ * See the LICENSE file in the project root.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="cms_page_revisions_listing_data_source" xsi:type="string">PluginCompany\CmsRevisions\Model\ResourceModel\Page\Grid\Collection</item>
+                <item name="cms_block_revisions_listing_data_source" xsi:type="string">PluginCompany\CmsRevisions\Model\ResourceModel\Block\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="PluginCompany\CmsRevisions\Model\ResourceModel\Page\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">plugincompany_cms_page_revisions</argument>
+            <argument name="eventPrefix" xsi:type="string">cms_page_revisions_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">page_revisions_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">PluginCompany\CmsRevisions\Model\ResourceModel\Page</argument>
+        </arguments>
+    </type>
+    <type name="PluginCompany\CmsRevisions\Model\ResourceModel\Block\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">plugincompany_cms_block_revisions</argument>
+            <argument name="eventPrefix" xsi:type="string">cms_block_revisions_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">block_revisions_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">PluginCompany\CmsRevisions\Model\ResourceModel\Block</argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright (c) 2014-2026 Plugin Company
+ *
+ * This file is part of CMS Revisions for Magento 2, released under the MIT License.
+ * See the LICENSE file in the project root.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="page_revisions_fieldset">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string" translate="true">Page Revisions</item>
+                <item name="sortOrder" xsi:type="number">70</item>
+            </item>
+        </argument>
+
+        <insertListing name="cmsPageRevisionsListing" class="PluginCompany\CmsRevisions\Component\Adminhtml\PageListing">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="autoRender" xsi:type="boolean">true</item>
+                    <item name="behaviourType" xsi:type="string">simple</item>
+                    <item name="ns" xsi:type="string">cms_page_revisions_listing</item>
+                </item>
+            </argument>
+        </insertListing>
+    </fieldset>
+</form>
