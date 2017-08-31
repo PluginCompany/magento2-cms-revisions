@@ -28,7 +28,7 @@ class Collection extends PageCollection implements SearchResultInterface
      * @param \Magento\Framework\Data\Collection\Db\FetchStrategyInterface $fetchStrategy
      * @param \Magento\Framework\Event\ManagerInterface $eventManager
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Framework\EntityManager\MetadataPool $metadataPool
+     * @param mixed $metadataPool
      * @param mixed|null $mainTable
      * @param \Magento\Framework\Model\ResourceModel\Db\AbstractDb $eventPrefix
      * @param mixed $eventObject
@@ -45,7 +45,6 @@ class Collection extends PageCollection implements SearchResultInterface
         \Magento\Framework\Data\Collection\Db\FetchStrategyInterface $fetchStrategy,
         \Magento\Framework\Event\ManagerInterface $eventManager,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Framework\EntityManager\MetadataPool $metadataPool,
         $mainTable,
         $eventPrefix,
         $eventObject,
