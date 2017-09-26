@@ -8,10 +8,10 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
-  <event name="cms_page_save_before">
-    <observer name="plugincompany_cmsrevisions" instance="PluginCompany\CmsRevisions\Observer\CmsPageSaveBefore" shared="false"/>
+  <event name="cms_page_save_after">
+    <observer name="plugincompany_cmsrevisions" instance="PluginCompany\CmsRevisions\Observer\CmsPageSaveAfter" shared="false"/>
   </event>
-  <event name="cms_block_save_before">
-    <observer name="plugincompany_cmsrevisions" instance="PluginCompany\CmsRevisions\Observer\CmsBlockSaveBefore" shared="false"/>
+  <event name="cms_block_save_after">
+    <observer name="plugincompany_cmsrevisions" instance="PluginCompany\CmsRevisions\Observer\CmsBlockSaveAfter" shared="false"/>
   </event>
 </config>

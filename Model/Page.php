@@ -8,14 +8,20 @@
 namespace PluginCompany\CmsRevisions\Model;
 
 use Magento\Cms\Model\PageRepository as CmsPageRepository;
+use Magento\Framework\Data\Collection\AbstractDb;
+use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Model\AbstractModel;
+use Magento\Framework\Model\Context;
+use Magento\Framework\Model\ResourceModel\AbstractResource;
+use Magento\Framework\Registry;
 
-class Page extends \Magento\Framework\Model\AbstractModel implements PageInterface, \Magento\Framework\DataObject\IdentityInterface
+class Page extends AbstractModel implements PageInterface, IdentityInterface
 {
     const CACHE_TAG = 'plugincompany_cmsrevisions_page';
     
-    private $page;
+    private $cmsPage;
     private $cmsPageRepository;
     private $pageRevisionRepository;
 
@@ -23,22 +29,23 @@ class Page extends \Magento\Framework\Model\AbstractModel implements PageInterfa
     {
         $this->_init('PluginCompany\CmsRevisions\Model\ResourceModel\Page');
     }
-    
+
     /**
-     * @param \Magento\Framework\Model\Context $context
-     * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb $resourceCollection
+     * @param CmsPageRepository $cmsPageRepository
+     * @param PageRepository $pageRevisionRepository
+     * @param Context $context
+     * @param Registry $registry
+     * @param AbstractResource $resource
+     * @param AbstractDb $resourceCollection
      * @param array $data
-     * @param $pageRepository
      */
     public function __construct(
         CmsPageRepository $cmsPageRepository,
         PageRepository $pageRevisionRepository,
-        \Magento\Framework\Model\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        Context $context,
+        Registry $registry,
+        AbstractResource $resource = null,
+        AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         $this->cmsPageRepository = $cmsPageRepository;
@@ -55,35 +62,34 @@ class Page extends \Magento\Framework\Model\AbstractModel implements PageInterfa
     public function restore()
     {
         $this
-            ->initPage()
+            ->initCmsPage()
             ->setRevisionDataToPage()
-            ->savePage()
+            ->saveCmsPage()
             ->saveThisRevisionAsCurrent()
         ;
         return $this;
     }
-    
-    public function setRevisionDataToPage()
+
+    private function setRevisionDataToPage()
     {
         $this
-            ->getPage()
+            ->getCmsPage()
             ->addData($this->getDataWithoutCreationTime());
         return $this;
     }
-    
-    
-    public function getPage()
+
+    private function getCmsPage()
     {
-        if (!$this->page) {
-            $this->initPage();
+        if (!$this->cmsPage) {
+            $this->initCmsPage();
         }
-        return $this->page;
+        return $this->cmsPage;
     }
-    
-    private function initPage()
+
+    private function initCmsPage()
     {
-        if (!$this->page) {
-            $this->page = $this->retrievePage();
+        if (!$this->cmsPage) {
+            $this->cmsPage = $this->retrievePage();
         }
         return $this;
     }
@@ -115,20 +121,20 @@ class Page extends \Magento\Framework\Model\AbstractModel implements PageInterfa
         return $data;
     }
     
-    private function savePage()
+    private function saveCmsPage()
     {
         try {
-            $this->executeSavePage();
+            $this->executeSaveCmsPage();
         } catch (CouldNotSaveException $e) {
             $this->throwCmsPageSaveError();
         }
         return $this;
     }
     
-    private function executeSavePage()
+    private function executeSaveCmsPage()
     {
         $this->cmsPageRepository
-            ->save($this->getPage());
+            ->save($this->getCmsPage());
     }
     
     private function throwCmsPageSaveError()
@@ -142,4 +148,11 @@ class Page extends \Magento\Framework\Model\AbstractModel implements PageInterfa
             ->saveAsCurrent($this);
         return $this;
     }
+
+    public function getCmsPageWithRevisionData()
+    {
+        $this->setRevisionDataToPage();
+        return $this->getCmsPage();
+    }
+
 }

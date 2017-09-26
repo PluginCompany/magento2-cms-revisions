@@ -14,10 +14,10 @@ class AdminUsers implements OptionSourceInterface
 {
     private $collectionFactory;
     private $optionArray;
-    private $optionCollection;
-    
-    public function __construct(CollectionFactory $collectionFactory)
-    {
+
+    public function __construct(
+        CollectionFactory $collectionFactory
+    ) {
         $this->collectionFactory = $collectionFactory;
     }
 
@@ -46,26 +46,24 @@ class AdminUsers implements OptionSourceInterface
 
     private function getFormattedOptionArray()
     {
-        $this->initOptionCollection();
-        return $this->getFormattedOptionArrayFromOptionCollection();
-    }
-
-    private function initOptionCollection()
-    {
-        return $this->optionCollection = $this->collectionFactory->create();
-    }
-
-    private function getFormattedOptionArrayFromOptionCollection()
-    {
-        $options = $this->optionCollection;
         $optionArray = [];
-        foreach ($options as $user) {
+        foreach ($this->getOptionsCollection() as $user) {
             $optionArray[] =
                 [
                     'label' => $user->getName(),
                     'value' => $user->getId()
                 ];
         }
+        $optionArray[] = [
+            'label' => 'System',
+            'value' => 5000
+        ];
         return $optionArray;
     }
+
+    private function getOptionsCollection()
+    {
+        return $this->collectionFactory->create();
+    }
+
 }

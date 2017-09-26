@@ -8,8 +8,12 @@
 namespace PluginCompany\CmsRevisions\Model;
 
 use Magento\Cms\Model\BlockRepository as CmsBlockRepository;
+use Magento\Framework\Data\Collection\AbstractDb;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Model\Context;
+use Magento\Framework\Model\ResourceModel\AbstractResource;
+use Magento\Framework\Registry;
 
 class Block extends \Magento\Framework\Model\AbstractModel implements BlockInterface, \Magento\Framework\DataObject\IdentityInterface
 {
@@ -25,20 +29,22 @@ class Block extends \Magento\Framework\Model\AbstractModel implements BlockInter
     }
 
     /**
-     * @param \Magento\Framework\Model\Context $context
-     * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Framework\Model\ResourceModel\AbstractResource $resource
-     * @param \Magento\Framework\Data\Collection\AbstractDb $resourceCollection
+     * @param CmsBlockRepository $cmsBlockRepository
+     * @param BlockRepository $blockRevisionRepository
+     * @param Context $context
+     * @param Registry $registry
+     * @param AbstractResource $resource
+     * @param AbstractDb $resourceCollection
      * @param array $data
-     * @param $blockRepository
+     * @internal param $blockRepository
      */
     public function __construct(
         CmsBlockRepository $cmsBlockRepository,
         BlockRepository $blockRevisionRepository,
-        \Magento\Framework\Model\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
+        Context $context,
+        Registry $registry,
+        AbstractResource $resource = null,
+        AbstractDb $resourceCollection = null,
         array $data = []
     ) {
         $this->cmsBlockRepository = $cmsBlockRepository;
@@ -66,13 +72,13 @@ class Block extends \Magento\Framework\Model\AbstractModel implements BlockInter
     private function setRevisionDataToBlock()
     {
         $this
-            ->getBlock()
+            ->getCmsBlock()
             ->addData($this->getDataWithoutCreationTime());
         return $this;
     }
 
 
-    public function getBlock()
+    public function getCmsBlock()
     {
         if (!$this->block) {
             $this->initBlock();
@@ -128,7 +134,7 @@ class Block extends \Magento\Framework\Model\AbstractModel implements BlockInter
     private function executeSaveBlock()
     {
         $this->cmsBlockRepository
-            ->save($this->getBlock());
+            ->save($this->getCmsBlock());
     }
 
     private function throwCmsBlockSaveError()

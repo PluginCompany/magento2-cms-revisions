@@ -44,7 +44,6 @@ define([
             ;
         },
         setParametersFromActionObject: function (actionObject) {
-            console.log(actionObject);
             this.storeArray = this.makeArrayFromObject(actionObject['stores']);
             this.revisionId = actionObject.revisionId;
             return this;
@@ -108,8 +107,11 @@ define([
             var url = this.getSelectedStorePreviewUrl();
             url = url.split('?');
             url.splice(1, 0, 'page_revision_id/' + this.revisionId);
-            url[2] = '?' + url[2];
+            if(typeof url[2] !== "undefined"){
+                url[2] = '?' + url[2];
+            }
             url = url.join('');
+            console.log(url);
             return url;
         },
         getSelectedStorePreviewUrl: function () {

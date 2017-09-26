@@ -57,15 +57,16 @@ class Stores implements OptionSourceInterface
 
     private function getFormattedStoreArrayFromStoreCollection()
     {
-        
         $stores = $this->storeCollection;
+
         $storeArray = [];
         foreach ($stores as $storeId => $store) {
+            /** @var $store \Magento\Store\Model\Store */
             $storeArray[$storeId] =
                 [
                     'label' => $store->getName(),
                     'value' => $store->getId(),
-                    'previewUrl' => $store->getUrl('previewcms/preview/show')
+                    'previewUrl' => $store->getBaseUrl() . 'previewcms/preview/show/'
                 ];
         }
         return $storeArray;

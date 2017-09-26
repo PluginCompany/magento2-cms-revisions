@@ -7,21 +7,25 @@
  */
 namespace PluginCompany\CmsRevisions\Controller\Preview;
 
+use Magento\Framework\App\Action\Action;
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\Controller\Result\ForwardFactory;
 use PluginCompany\CmsRevisions\Model\PageRepository;
 
-class Show extends \Magento\Framework\App\Action\Action
+class Show extends Action
 {
     private $resultForwardFactory;
     private $pageRevisionRepository;
-    
+
     /**
-     * @param \Magento\Framework\App\Action\Context $context
-     * @param \Magento\Framework\Controller\Result\ForwardFactory $resultForwardFactory
+     * @param PageRepository $pageRevisionRepository
+     * @param Context $context
+     * @param ForwardFactory $resultForwardFactory
      */
     public function __construct(
         PageRepository $pageRevisionRepository,
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\Controller\Result\ForwardFactory $resultForwardFactory
+        Context $context,
+        ForwardFactory $resultForwardFactory
     ) {
         $this->pageRevisionRepository = $pageRevisionRepository;
         $this->resultForwardFactory = $resultForwardFactory;
@@ -47,7 +51,10 @@ class Show extends \Magento\Framework\App\Action\Action
         }
         return $resultPage;
     }
-    
+
+    /**
+     * @return \PluginCompany\CmsRevisions\Model\Page
+     */
     private function getPageRevision()
     {
         return $this->pageRevisionRepository->getById($this->getRevisionId());
@@ -69,7 +76,6 @@ class Show extends \Magento\Framework\App\Action\Action
     {
         return $this
             ->getPageRevision()
-            ->setRevisionDataToPage()
-            ->getPage();
+            ->getCmsPageWithRevisionData();
     }
 }

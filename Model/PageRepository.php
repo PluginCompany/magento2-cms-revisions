@@ -26,7 +26,6 @@ class PageRepository implements \PluginCompany\CmsRevisions\Api\PageRepositoryIn
         CollectionFactory $collectionFactory,
         SearchResultsInterfaceFactory $searchResultsFactory
     ) {
-    
         $this->objectFactory        = $objectFactory;
         $this->collectionFactory    = $collectionFactory;
         $this->searchResultsFactory = $searchResultsFactory;
