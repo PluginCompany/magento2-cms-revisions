@@ -54,26 +54,14 @@ class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvi
     
     public function addPageIdFilter()
     {
-        if ($this->canFilterPageId()) {
-            $this->execAddPageIdFilter();
-        }
-    }
-    
-    public function canFilterPageId()
-    {
-        return (bool)$this->getCurrentPageId();
+        $this->searchCriteriaBuilder
+            ->addFilter($this->generatePageIdFilterObject());
+        return $this;
     }
     
     public function getCurrentPageId()
     {
-        return $this->request->getParam('page_id');
-    }
-    
-    private function execAddPageIdFilter()
-    {
-        $this->searchCriteriaBuilder
-            ->addFilter($this->generatePageIdFilterObject());
-        return $this;
+        return $this->request->getParam('page_id', 10000000);
     }
     
     private function generatePageIdFilterObject()

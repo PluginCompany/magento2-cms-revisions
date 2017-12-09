@@ -54,27 +54,14 @@ class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvi
     
     public function addBlockIdFilter()
     {
-        if ($this->canFilterBlockId()) {
-            $this->execAddBlockIdFilter();
-        }
+        $this->searchCriteriaBuilder
+            ->addFilter($this->generateBlockIdFilterObject());
         return $this;
-    }
-    
-    public function canFilterBlockId()
-    {
-        return (bool)$this->getCurrentBlockId();
     }
     
     public function getCurrentBlockId()
     {
-        return $this->request->getParam('block_id');
-    }
-    
-    private function execAddBlockIdFilter()
-    {
-        $this->searchCriteriaBuilder
-            ->addFilter($this->generateBlockIdFilterObject());
-        return $this;
+        return $this->request->getParam('block_id', 10000000);
     }
     
     private function generateBlockIdFilterObject()

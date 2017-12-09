@@ -8,8 +8,8 @@
 namespace PluginCompany\CmsRevisions\Model;
 
 use Magento\Framework\ObjectManagerInterface;
-use Magento\Cms\Model\Block as cmsBlock;
-use Magento\Cms\Model\BlockRepository;
+use Magento\Cms\Model\Block as CmsBlock;
+use Magento\Cms\Model\BlockRepository as CmsBlockRepository;
 
 class BlockFactory extends RevisionFactory
 {
@@ -17,12 +17,12 @@ class BlockFactory extends RevisionFactory
      * Factory constructor
      *
      * @param ObjectManagerInterface $objectManager
-     * @param BlockRepository $blockRepository
+     * @param CmsBlockRepository $blockRepository
      * @param string $instanceName
      */
     public function __construct(
         ObjectManagerInterface $objectManager,
-        BlockRepository $blockRepository,
+        CmsBlockRepository $blockRepository,
         $instanceName = '\\PluginCompany\\CmsRevisions\\Model\\Block')
     {
         parent::__construct(
@@ -37,7 +37,7 @@ class BlockFactory extends RevisionFactory
         return $this->createFromEntityId($blockId);
     }
 
-    public function createFromCmsBlock(cmsBlock $block)
+    public function createFromCmsBlock(CmsBlock $block)
     {
         return $this->createFromEntity($block);
     }

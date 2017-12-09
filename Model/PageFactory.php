@@ -7,9 +7,9 @@
  */
 namespace PluginCompany\CmsRevisions\Model;
 
-use Magento\Cms\Model\PageRepository;
+use Magento\Cms\Model\PageRepository as CmsPageRepository;
 use Magento\Framework\ObjectManagerInterface;
-use Magento\Cms\Model\Page as cmsPage;
+use Magento\Cms\Model\Page as CmsPage;
 
 class PageFactory extends RevisionFactory
 {
@@ -17,12 +17,12 @@ class PageFactory extends RevisionFactory
      * Factory constructor
      *
      * @param ObjectManagerInterface $objectManager
-     * @param PageRepository $pageRepository
+     * @param CmsPageRepository $pageRepository
      * @param string $instanceName
      */
     public function __construct(
         ObjectManagerInterface $objectManager,
-        PageRepository $pageRepository,
+        CmsPageRepository $pageRepository,
         $instanceName = '\\PluginCompany\\CmsRevisions\\Model\\Page')
     {
         parent::__construct(
@@ -37,7 +37,7 @@ class PageFactory extends RevisionFactory
         return $this->createFromEntityId($pageId);
     }
 
-    public function createFromCmsPage(cmsPage $page)
+    public function createFromCmsPage(CmsPage $page)
     {
         return $this->createFromEntity($page);
     }

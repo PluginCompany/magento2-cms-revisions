@@ -17,8 +17,7 @@
   <body>
     <referenceContainer name="content">
       <block class="Magento\Framework\View\Element\Template" name="RevisionListingTitle" template="PluginCompany_CmsRevisions::block/listingtitle.phtml"></block>
-      <!--<uiComponent name="cms_block_revisions_listing_title" can_show="true"/>-->
-      <uiComponent name="cms_block_revisions_listing" can_show="true"/>
+      <uiComponent name="cms_block_revisions_listing" />
     </referenceContainer>
   </body>
 </page>
