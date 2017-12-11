@@ -8,12 +8,6 @@
  */
 -->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-  <head>
-    <action method="addItem">
-      <type>js</type>
-      <name>plugincompany/cmsrevisions.js</name>
-    </action>
-  </head>
   <body>
     <referenceContainer name="content">
       <block class="Magento\Framework\View\Element\Template" name="RevisionListingTitle" template="PluginCompany_CmsRevisions::block/listingtitle.phtml"></block>
