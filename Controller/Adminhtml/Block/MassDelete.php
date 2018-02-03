@@ -114,7 +114,21 @@ class MassDelete extends \Magento\Backend\App\Action
         if (is_array($ids)) {
             return $ids;
         }
+        $excluded = $this->_request->getParam('excluded');
+        if(is_array($excluded)) {
+            return $this->getAllRevisionIdsExcluding($excluded);
+        }
         return [];
+    }
+
+    /**
+     * @param array $excluded
+     * @return array
+     */
+    private function getAllRevisionIdsExcluding($excluded)
+    {
+        $allIds = $this->getAllRevisionIdsForBlock();
+        return array_diff($allIds, $excluded);
     }
 
     /**

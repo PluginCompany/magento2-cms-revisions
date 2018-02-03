@@ -35,10 +35,26 @@ class CmsBlockSaveAfter implements ObserverInterface
     
     public function execute(Observer $observer)
     {
+        if($this->isRevisionAlreadyCreated()) {
+            return;
+        }
         $this->observer = $observer;
         $this->createRevisionBasedOnBlockData();
+        $this->registerRevisionCreated();
     }
-    
+
+    private function isRevisionAlreadyCreated()
+    {
+        return $this->registry->registry('revision_created');
+    }
+
+    private function registerRevisionCreated()
+    {
+        $this->registry->register('revision_created', true);
+        return $this;
+    }
+
+
     private function createRevisionBasedOnBlockData()
     {
         $this
