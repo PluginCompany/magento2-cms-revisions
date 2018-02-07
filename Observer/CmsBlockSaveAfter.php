@@ -10,6 +10,7 @@ namespace PluginCompany\CmsRevisions\Observer;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Backend\Model\Auth\Session;
+use Magento\Framework\Registry;
 use PluginCompany\CmsRevisions\Model\BlockRepository;
 use PluginCompany\CmsRevisions\Model\BlockFactory;
 
@@ -21,16 +22,22 @@ class CmsBlockSaveAfter implements ObserverInterface
     private $block;
     private $blockRevision;
     private $adminSession;
-    
+    /**
+     * @var Registry
+     */
+    private $registry;
+
     public function __construct(
         BlockFactory $blockRevisionFactory,
         BlockRepository $blockRevisionRepository,
-        Session $adminSession
+        Session $adminSession,
+        Registry $registry
     ) {
     
         $this->blockRevisionFactory = $blockRevisionFactory;
         $this->blockRevisionRepository = $blockRevisionRepository;
         $this->adminSession = $adminSession;
+        $this->registry = $registry;
     }
     
     public function execute(Observer $observer)
