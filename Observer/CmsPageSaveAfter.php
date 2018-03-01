@@ -102,12 +102,20 @@ class CmsPageSaveAfter implements ObserverInterface
             ->setAdminUserId($this->getCurrentAdminUserId());
         return $this;
     }
-    
+
     private function getCurrentAdminUserId()
     {
-        return $this->adminSession->getUser()->getId();
+        if($this->getCurrentAdminUser() && $this->getCurrentAdminUser()->getId()){
+            return $this->getCurrentAdminUser()->getId();
+        }
+        return 5000;
     }
-    
+
+    private function getCurrentAdminUser()
+    {
+        return $this->adminSession->getUser();
+    }
+
     private function saveRevisionAsCurrent()
     {
         $this->pageRevisionRepository
