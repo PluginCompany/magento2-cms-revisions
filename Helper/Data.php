@@ -11,5 +11,10 @@ use Magento\Framework\App\Helper\AbstractHelper;
 
 class Data extends AbstractHelper
 {
+
+    public function isPageBuilderActive()
+    {
+        return $this->scopeConfig->isSetFlag('cms/pagebuilder/enabled');
+    }
  
 }

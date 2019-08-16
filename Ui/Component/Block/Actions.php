@@ -7,13 +7,11 @@
  */
 namespace PluginCompany\CmsRevisions\Ui\Component\Block;
 
+use PluginCompany\CmsRevisions\Helper\Data;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
-use Magento\Store\Ui\Component\Listing\Column\Store;
 use Magento\Ui\Component\Listing\Columns\Column;
 use Magento\Framework\UrlInterface;
-
-use PluginCompany\CmsRevisions\Model\Source\Stores;
 
 /**
  * Class Actions
@@ -21,11 +19,16 @@ use PluginCompany\CmsRevisions\Model\Source\Stores;
 class Actions extends Column
 {
     const UI_COMPONENT_PATH = 'cms_block_revisions_listing.cms_block_revisions_listing.cms_block_revision_columns.actions';
-    
+
     private $urlBuilder;
+    /**
+     * @var Data
+     */
+    private $helper;
 
     /**
      * @param ContextInterface $context
+     * @param Data $helper
      * @param UiComponentFactory $uiComponentFactory
      * @param UrlInterface $urlBuilder
      * @param array $components
@@ -33,12 +36,14 @@ class Actions extends Column
      */
     public function __construct(
         ContextInterface $context,
+        Data $helper,
         UiComponentFactory $uiComponentFactory,
         UrlInterface $urlBuilder,
         array $components = [],
         array $data = []
     ) {
         $this->urlBuilder = $urlBuilder;
+        $this->helper = $helper;
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 
@@ -54,7 +59,9 @@ class Actions extends Column
             foreach ($dataSource['data']['items'] as & $item) {
                 $name = $this->getData('name');
                 if (isset($item['block_revision_id'])) {
-                    $item[$name]['show_in_editor'] = $this->getShowInEditorButton($item);
+                    if(!$this->isPageBuilderEnabled()) {
+                        $item[$name]['show_in_editor'] = $this->getShowInEditorButton($item);
+                    }
                     $item[$name]['restore'] = $this->getRestoreButton($item);
                     $item[$name]['delete'] = $this->getDeleteButton($item);
                 }
@@ -63,20 +70,13 @@ class Actions extends Column
 
         return $dataSource;
     }
-    
-    public function getRestoreButton($item)
+
+    private function isPageBuilderEnabled()
     {
-        return
-            [
-                'href' => $this->urlBuilder->getUrl('cmsrevisions/block/restore', ['block_revision_id' => $item['block_revision_id']]),
-                'label' => __('Restore'),
-                'confirm' => [
-                    'title' => __('Restore ${ $.$data.title }'),
-                    'message' => __('Are you sure you want to restore this revision?')
-                ]
-            ];
+        return $this->helper->isPageBuilderActive();
+
     }
-    
+
     public function getShowInEditorButton($item)
     {
         return
@@ -93,7 +93,20 @@ class Actions extends Column
                 'revision' => $item
             ];
     }
-    
+
+    public function getRestoreButton($item)
+    {
+        return
+            [
+                'href' => $this->urlBuilder->getUrl('cmsrevisions/block/restore', ['block_revision_id' => $item['block_revision_id']]),
+                'label' => __('Restore'),
+                'confirm' => [
+                    'title' => __('Restore ${ $.$data.title }'),
+                    'message' => __('Are you sure you want to restore this revision?')
+                ]
+            ];
+    }
+
     public function getDeleteButton($item)
     {
         return
