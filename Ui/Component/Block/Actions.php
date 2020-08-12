@@ -88,7 +88,8 @@ class Actions extends Column
                 ],
                 'confirm' => [
                     'title' => __('Edit "${ $.$data.title }" revision in current editor'),
-                    'message' => __('Are you sure you want to restore this revision in the editor? This will replace the existing contents.')
+                    'message' => __('Are you sure you want to restore this revision in the editor? This will replace the existing contents.'),
+                    '__disableTmpl' => ['title' => false, 'message' => false]
                 ],
                 'revision' => $item
             ];
@@ -102,7 +103,8 @@ class Actions extends Column
                 'label' => __('Restore'),
                 'confirm' => [
                     'title' => __('Restore ${ $.$data.title }'),
-                    'message' => __('Are you sure you want to restore this revision?')
+                    'message' => __('Are you sure you want to restore this revision?'),
+                    '__disableTmpl' => ['title' => false, 'message' => false]
                 ]
             ];
     }
@@ -115,7 +117,8 @@ class Actions extends Column
                 'label' => __('Delete'),
                 'confirm' => [
                     'title' => __('Delete ${ $.$data.title }'),
-                    'message' => __('Are you sure you want to delete this revision?')
+                    'message' => __('Are you sure you want to delete this revision?'),
+                    '__disableTmpl' => ['title' => false, 'message' => false]
                 ]
             ];
     }
