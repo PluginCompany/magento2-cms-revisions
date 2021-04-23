@@ -10,8 +10,8 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
   <body>
     <referenceContainer name="content">
-      <block class="Magento\Framework\View\Element\Template" name="RevisionListingTitle" template="PluginCompany_CmsRevisions::block/listingtitle.phtml"></block>
-      <uiComponent name="cms_block_revisions_listing" />
+      <block aclResource="PluginCompany_CmsRevisions::block" class="Magento\Framework\View\Element\Template" name="RevisionListingTitle" template="PluginCompany_CmsRevisions::block/listingtitle.phtml"></block>
+      <uiComponent aclResource="PluginCompany_CmsRevisions::block" name="cms_block_revisions_listing" />
     </referenceContainer>
   </body>
 </page>

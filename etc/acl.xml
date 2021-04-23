@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Backend::content">
+                    <resource id="Magento_Backend::content_elements">
+                        <resource id="Magento_Cms::page">
+                            <resource id="PluginCompany_CmsRevisions::page" sortOrder="100" title="Page Revisions (Plugin Company)" translate="title">
+                                <resource id="PluginCompany_CmsRevisions::page_restore" sortOrder="10" title="Restore Revision" translate="title" />
+                                <resource id="PluginCompany_CmsRevisions::page_delete" sortOrder="20" title="Delete Revision" translate="title" />
+                            </resource>
+                        </resource>
+                        <resource id="Magento_Cms::block">
+                            <resource id="PluginCompany_CmsRevisions::block" sortOrder="100" title="Block Revisions (Plugin Company)" translate="title">
+                                <resource id="PluginCompany_CmsRevisions::block_restore" sortOrder="10" title="Restore Revision" translate="title" />
+                                <resource id="PluginCompany_CmsRevisions::block_delete" sortOrder="20" title="Delete Revision" translate="title" />
+                            </resource>
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>
+

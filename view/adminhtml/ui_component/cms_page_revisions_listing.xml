@@ -46,7 +46,7 @@
         <bookmark name="bookmarks"/>
         <columnsControls name="columns_controls"/>
         <massaction name="listing_massaction">
-            <action name="delete">
+            <action name="delete" class="PluginCompany\CmsRevisions\Ui\Component\Page\MassDeleteAction">
                 <argument name="data" xsi:type="array">
                     <item name="config" xsi:type="array">
                         <item name="type" xsi:type="string">delete</item>

@@ -48,4 +48,5 @@ class PageListing extends Listing
         $url = $this->context->getUrl('mui/index/render', ['_current' => true]);
         return $url;
     }
+
 }
