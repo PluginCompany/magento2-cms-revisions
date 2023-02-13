@@ -40,9 +40,9 @@ class Actions extends Column
      * @param UrlInterface $urlBuilder
      * @param Data $helper
      * @param AuthorizationInterface $authorization
+     * @param Stores $storeSource
      * @param array $components
      * @param array $data
-     * @param Stores $storeSource
      */
     public function __construct(
         ContextInterface $context,
@@ -50,9 +50,9 @@ class Actions extends Column
         UrlInterface $urlBuilder,
         Data $helper,
         AuthorizationInterface $authorization,
+        Stores $storeSource,
         array $components = [],
-        array $data = [],
-        Stores $storeSource
+        array $data = []
     ) {
         $this->storeSource = $storeSource;
         $this->urlBuilder = $urlBuilder;
