@@ -18,6 +18,12 @@ use Magento\Framework\Exception\CouldNotDeleteException;
 class MassDelete extends \Magento\Backend\App\Action
 {
     /**
+     * "Delete Revision" permission (etc/acl.xml); the grid only shows Delete / mass delete with it.
+     * Also used by Delete, which extends this class.
+     */
+    const ADMIN_RESOURCE = 'PluginCompany_CmsRevisions::block_delete';
+
+    /**
      * @var BlockRepository
      */
     private $blockRevisionRepository;
@@ -39,6 +45,16 @@ class MassDelete extends \Magento\Backend\App\Action
     {
         $this->blockRevisionRepository = $blockRevisionRepository;
         parent::__construct($context);
+    }
+
+    /**
+     * Explicit permission check, independent of how the parent class reads ADMIN_RESOURCE
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed(static::ADMIN_RESOURCE);
     }
 
     /**

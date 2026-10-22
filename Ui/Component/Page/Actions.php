@@ -15,6 +15,7 @@ use Magento\Framework\UrlInterface;
 
 use PluginCompany\CmsRevisions\Helper\Data;
 use PluginCompany\CmsRevisions\Model\Source\Stores;
+use PluginCompany\CmsRevisions\Model\PreviewToken;
 
 /**
  * Class Actions
@@ -33,6 +34,10 @@ class Actions extends Column
      * @var AuthorizationInterface
      */
     private $authorization;
+    /**
+     * @var PreviewToken
+     */
+    private $previewToken;
 
     /**
      * @param ContextInterface $context
@@ -41,6 +46,7 @@ class Actions extends Column
      * @param Data $helper
      * @param AuthorizationInterface $authorization
      * @param Stores $storeSource
+     * @param PreviewToken $previewToken
      * @param array $components
      * @param array $data
      */
@@ -51,6 +57,7 @@ class Actions extends Column
         Data $helper,
         AuthorizationInterface $authorization,
         Stores $storeSource,
+        PreviewToken $previewToken,
         array $components = [],
         array $data = []
     ) {
@@ -58,6 +65,7 @@ class Actions extends Column
         $this->urlBuilder = $urlBuilder;
         $this->helper = $helper;
         $this->authorization = $authorization;
+        $this->previewToken = $previewToken;
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
 
@@ -118,6 +126,7 @@ class Actions extends Column
     
     public function getPreviewButton($item)
     {
+        $signature = $this->previewToken->create($item['page_revision_id']);
         return
             [
                 'label' => __('Preview'),
@@ -126,7 +135,9 @@ class Actions extends Column
                     'target' => 'preview'
                 ],
                 'stores' => $this->storeSource->toOptionArray(),
-                'revisionId' => $item['page_revision_id']
+                'revisionId' => $item['page_revision_id'],
+                'previewExpires' => $signature['expires'],
+                'previewToken' => $signature['token']
             ];
     }
     

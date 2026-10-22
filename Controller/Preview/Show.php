@@ -11,24 +11,29 @@ use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\Result\ForwardFactory;
 use PluginCompany\CmsRevisions\Model\PageRepository;
+use PluginCompany\CmsRevisions\Model\PreviewToken;
 
 class Show extends Action
 {
     private $resultForwardFactory;
     private $pageRevisionRepository;
+    private $previewToken;
 
     /**
      * @param PageRepository $pageRevisionRepository
      * @param Context $context
      * @param ForwardFactory $resultForwardFactory
+     * @param PreviewToken $previewToken
      */
     public function __construct(
         PageRepository $pageRevisionRepository,
         Context $context,
-        ForwardFactory $resultForwardFactory
+        ForwardFactory $resultForwardFactory,
+        PreviewToken $previewToken
     ) {
         $this->pageRevisionRepository = $pageRevisionRepository;
         $this->resultForwardFactory = $resultForwardFactory;
+        $this->previewToken = $previewToken;
         parent::__construct($context);
     }
 
@@ -39,6 +44,9 @@ class Show extends Action
     */
     public function execute()
     {
+        if (!$this->isSignedPreviewLink()) {
+            return $this->resultForwardFactory->create()->forward('noroute');
+        }
         $resultPage = $this
             ->_objectManager
             ->get('PluginCompany\CmsRevisions\Helper\PageRevision')
@@ -60,6 +68,20 @@ class Show extends Action
         return $this->pageRevisionRepository->getById($this->getRevisionId());
     }
     
+    /**
+     * Preview links are created in the admin revision grid and are signed and time limited
+     *
+     * @return bool
+     */
+    private function isSignedPreviewLink()
+    {
+        return $this->previewToken->isValid(
+            $this->getRevisionId(),
+            $this->_request->getParam('expires'),
+            $this->_request->getParam('token')
+        );
+    }
+
     private function getRevisionId()
     {
         return $this->_request->getParam('page_revision_id');

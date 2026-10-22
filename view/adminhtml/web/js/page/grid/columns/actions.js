@@ -46,6 +46,8 @@ define([
         setParametersFromActionObject: function (actionObject) {
             this.storeArray = this.makeArrayFromObject(actionObject['stores']);
             this.revisionId = actionObject.revisionId;
+            this.previewExpires = actionObject.previewExpires;
+            this.previewToken = actionObject.previewToken;
             return this;
         },
         showPreviewPrompt: function () {
@@ -106,7 +108,8 @@ define([
         getPreviewUrlWithParams: function () {
             var url = this.getSelectedStorePreviewUrl();
             url = url.split('?');
-            url.splice(1, 0, 'page_revision_id/' + this.revisionId);
+            url.splice(1, 0, 'page_revision_id/' + this.revisionId
+                + '/expires/' + this.previewExpires + '/token/' + this.previewToken);
             if(typeof url[2] !== "undefined"){
                 url[2] = '?' + url[2];
             }

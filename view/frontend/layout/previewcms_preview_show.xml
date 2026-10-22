@@ -11,6 +11,7 @@
     <body>
         <referenceContainer name="content">
             <block class="Magento\Cms\Block\Page" name="cms_page"/>
+            <block class="Magento\Framework\View\Element\Text" name="pc_cmsrevisions_preview_nocache" cacheable="false"/>
         </referenceContainer>
     </body>
 </page>
