@@ -8,11 +8,15 @@
 namespace PluginCompany\CmsRevisions\Controller\Adminhtml\Page;
 
 use PluginCompany\CmsRevisions\Model\PageRepository;
-use Magento\Framework\App\Action\Context;
+use Magento\Backend\App\Action\Context;
 use Magento\Framework\Exception\NoSuchEntityException;
 
-class Restore extends \Magento\Framework\App\Action\Action
+class Restore extends \Magento\Backend\App\Action
 {
+    /**
+     * "Restore Revision" permission (etc/acl.xml); the grid only shows the Restore link with it
+     */
+    const ADMIN_RESOURCE = 'PluginCompany_CmsRevisions::page_restore';
     
     private $pageRevisionRepository;
     private $pageRevision;
@@ -26,6 +30,16 @@ class Restore extends \Magento\Framework\App\Action\Action
         $this->pageRevisionRepository = $pageRevisionRepository;
     }
         
+    /**
+     * Explicit permission check, independent of how the parent class reads ADMIN_RESOURCE
+     *
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed(self::ADMIN_RESOURCE);
+    }
+
     public function execute()
     {
         try {
